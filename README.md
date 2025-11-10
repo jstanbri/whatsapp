@@ -1,2 +1,4 @@
 # whatsapp
-WhatsApp integration catalog etc
+
+WhatsApp Business Inquiry Handler
+Automate responses to common inquiries and manage bookings
