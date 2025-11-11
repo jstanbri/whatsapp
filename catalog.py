@@ -26,7 +26,7 @@ class WhatsAppCatalogManager:
     def __init__(self, access_token: str, business_account_id: str):
         self.access_token = access_token
         self.business_account_id = business_account_id
-        self.base_url = "https://graph.facebook.com/v18.0"
+        self.base_url = "https://graph.facebook.com/v24.0"
         self.headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -172,13 +172,17 @@ def setup_consulting_catalog(manager: WhatsAppCatalogManager, catalog_id: str):
     
     return results
 
+import os
+from dotenv import load_dotenv
+# Load environment variables
+load_dotenv()
 
 # Usage Example
 if __name__ == "__main__":
     # Configure your credentials
-    ACCESS_TOKEN = "EAAKIcdZASr8oBP8NJTsPhbUZCzJhbVLSAkpd7ScpVgWBeNx7tVNLipbjVUvZBszxZAgSzxA8VLygiduGkKT7zaPLG1QYqZAZCwYW3xt7yVs0sbQZA4W6ZCgZCl1kVqv9uJ7BMnddqdiW0rLSmjAMT3UfOZA2lLmp611kuBRO98YiS7NdjZA6cfobnZC7Q6o4auMRZCxAa7LBvSFkyRvEk2YGFoztT7TefyuwUzNo52vqkYLjxye4qcZAeJV0eMDbtbddArzaZCZBd8Dh6OVuI4HCeWMjK2efKKZCHVTD0mYJJyP9n3ZBYZD"
-    BUSINESS_ACCOUNT_ID = "687022837460479"
-    PHONE_NUMBER_ID = "856886180841184"  # Your WhatsApp Business Phone Number ID
+    ACCESS_TOKEN = os.environ.get("USER_ACCESS_TOKEN")
+    BUSINESS_ACCOUNT_ID = os.environ.get("BUSINESS_ID")
+    PHONE_NUMBER_ID = os.environ.get("PHONE_NUMBER_ID")
     
     # Initialize manager
     manager = WhatsAppCatalogManager(ACCESS_TOKEN, BUSINESS_ACCOUNT_ID)
@@ -195,7 +199,7 @@ if __name__ == "__main__":
     # Send catalog to a client (example)
     manager.send_catalog_message(
         phone_number_id=PHONE_NUMBER_ID,
-        to="447496727058",  # Client's number with country code
+        to=os.getenv("RECIPIENT_PHONE_NUMBER"),
         body_text="Here are my consulting services. Let me know what interests you!",
         catalog_id=catalog_id
     )
